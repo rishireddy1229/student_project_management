@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB - Express</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <style>
+        .displayDiv,
+        .addDiv {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="text-center p-2">STUDENT PROJECT MANAGEMENT SYSTEM</h1>
+    <div class="container p-2" style="display:flex; border: 3px dashed lightsalmon; justify-content:space-evenly">
+        <button class="btn btn-warning p-3" style="width:200px" onclick="readStudents()">READ ALL</button>
+
+        <button class="btn btn-primary p-3" style="width:200px" onclick="showAddStudents()">ADD NEW</button>
+    </div>
+    <div class="container p-3">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="addDiv p-5" style="border: 3px solid goldenrod;" id="addDiv">
+                    <label for="_id">ID</label>
+                    <input class="form-control" type="text" id="_aid" /><br />
+                    <label for="name">Name</label>
+                    <input class="form-control" type="text" id="aname" /><br />
+                    <label for="phone">Phone</label>
+                    <input class="form-control" type="text" id="aphone" /><br />
+                    <label for="email">Email</label>
+                    <input class="form-control" type="text" id="aemail" /><br />
+                    <button class="btn btn-primary form-control" onclick="addStudents()">ADD USER</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container p-2">
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-striped table-success">
+                    <thead>
+                        <tr align="center">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th colspan="2">EDIT / DELETE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="container p-3">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="displayDiv p-5" style="border: 3px solid goldenrod;" id="displayDiv">
+                    <label for="_id">ID</label>
+                    <input class="form-control" type="text" id="_id" disabled /><br />
+                    <label for="name">Name</label>
+                    <input class="form-control" type="text" id="name" /><br />
+                    <label for="phone">Phone</label>
+                    <input class="form-control" type="text" id="phone" /><br />
+                    <label for="email">Email</label>
+                    <input class="form-control" type="text" id="email" /><br />
+                    <button class="btn btn-success form-control" onclick="updateStudents()">UPDATE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script>
+        let displayDiv = document.getElementById('displayDiv');
+        let addDiv = document.getElementById('addDiv');
+        let id = document.getElementById('_id')
+        let name = document.getElementById('name')
+        let phone = document.getElementById('phone')
+        let email = document.getElementById('email')
+        let aid = document.getElementById('_aid')
+        let aname = document.getElementById('aname')
+        let aphone = document.getElementById('aphone')
+        let aemail = document.getElementById('aemail')
+
+        function showAddStudents() {
+            addDiv.style.display = "block";
+        }
+        let addStudents = async () => {
+            let result = await fetch('http://localhost:3000/addStudents', {
+                method: "POST",
+                body: JSON.stringify({
+                    _id: aid.value,
+                    name: aname.value,
+                    phone: aphone.value,
+                    email: aemail.value
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            alert("Record inserted successfully.")
+            addDiv.style.display = "none";
+            location.reload();
+        }
+
+        async function readStudents() {
+            let readData = await fetch('http://localhost:3000/admin/admind/readStudents');
+            let result = await readData.json();
+            let tbody = document.getElementById('tableBody');
+            result.forEach(element => {
+                tbody.innerHTML += `
+                <tr align='center'>
+                    <td>${element._id}</td>
+                    <td>${element.name}</td>
+                    <td>${element.phone}</td>
+                    <td>${element.email}</td>
+                    <td><button class="btn btn-success" onclick='readUserById(${element._id})'>EDIT</button></td>
+                    <td><button class="btn btn-danger" onclick='deleteUserById(${element._id})'>DELETE</button></td>
+                </tr>
+            `
+            });
+        }
+
+        async function readStudentsById(_id) {
+            let readData = await fetch('http://localhost:3000/readStudentsById/' + _id);
+            let result = await readData.json();
+            displayDiv.style.display = "block";
+
+            id.value = _id;
+            name.value = result[0].name;
+            phone.value = result[0].phone;
+            email.value = result[0].email;
+        }
+
+        let updateStudents = async () => {
+            let readData = await fetch('http://localhost:3000/updateStudents', {
+                method: "PUT",
+                body: JSON.stringify({
+                    _id: id.value,
+                    name: name.value,
+                    phone: phone.value,
+                    email: email.value
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+            let result = await readData.json();
+            alert("Record Updated Successfully");
+            displayDiv.style.display = "none";
+            location.reload();
+        }
+
+        async function deleteStudentsById(_id) {
+            let readData = await fetch('http://localhost:3000/deleteStudents', {
+                method: "DELETE",
+                body: JSON.stringify({
+                    _id: _id
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+            let result = await readData.json();
+            alert(result.message);
+            location.reload();
+        }
+    </script> -->
+</body>
+
+</html>

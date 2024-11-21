@@ -1,0 +1,182 @@
+
+<body>
+    <br><br>
+ <div class="projectsWholeContainer" style="width: fit-content; display: grid;align-items: center;margin: auto;margin-bottom: 50px;background-color:cadetblue;">
+    <br />
+    <div class="rightContainer" style="width: 600px; margin-top: 10px; margin-left: 60px;margin-right: 60px;" *ngIf="stuDash">
+        <b style="font-size: x-large;margin-right: 10px;">Projects List</b> <button type="button" (click)="loadProjects()">  View Projects</button>
+
+        <!-- <button (click)="loadProjects()">Load Projects List</button> -->
+        <br><br>
+        <table class="table table-bordered" align="center" style="column-width: 35%">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">DESCRIPTION</th>
+                    <th scope="col">SUPERVISOR</th>
+                    <th scope="col">SELECT?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr scope="row" *ngFor="let project of selProjects">
+                    <td>{{ project._id }}</td>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.description }}</td>
+                    <td>{{ project.supervisor }}</td>
+                    <!-- <td><input type="radio" name="select" onselect="chooseProject(project)"></td> -->
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="chooseProject(project)">
+                            Select
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- <div style="margin-top: 10px; margin-bottom: 20px;">
+            <button type="button" class="btn btn-primary" (click)="reportDetails()">Choose and report details</button>
+        </div> -->
+    </div>
+    <div class="leftContainer" style="
+      display: flex;
+      margin-top: 100px;
+      margin-right: 100px;
+      align-items: center;
+    " *ngIf="selReport">
+        <div class="addProContainer" style="width: 500px; margin: 10px; border: 0.5cm">
+            <b>
+                <legend>Report Details</legend>
+            </b>
+
+            <form #groupsPost="ngForm" (ngSubmit)="reportGroup(groupsPost.value)">
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">Project Id</label>
+                    <input type="text" name="_id" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtPrice" class="form-label">Title</label>
+                    <input type="text" name="name" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtQuantity" class="form-label">Description</label>
+                    <input type="text" name="description" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtQuantity" class="form-label">Supervisor</label>
+                    <input type="text" name="supervisor" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtQuantity" class="form-label">Student1 Id</label>
+                    <input type="text" name="s1Id" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtQuantity" class="form-label">Student2 Id</label>
+                    <input type="text" name="s2Id" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtQuantity" class="form-label">Student3 Id</label>
+                    <input type="text" name="s3Id" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtQuantity" class="form-label">Group lead Phone Number</label>
+                    <input type="text" name="phone" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtQuantity" class="form-label">Group lead mail id</label>
+                    <input type="text" name="email" class="form-control" ngModel />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Report</button>
+            </form>
+        </div>
+
+        <!-- next page -->
+        <div class="rightContainer1" style="width: 600px; margin-top: 70px; margin-left: 60px">
+            <!-- <b>
+                <legend style="float: left">Your Projects List</legend>
+            </b>
+            <div style="margin-top: 10px; margin-bottom: 20px">
+                <div class="mb-3">
+                    <form #sId="ngForm" (ngSubmit)="reportGroup(groupsPost.value)">
+                        <label for="txtName" class="form-label">Enter your Id</label>
+                        <input type="text" name="sId" class="form-control" ngModel />
+                        <button type="submit" class="btn btn-primary" (click)="loadStudentProjects(sId)">
+                            View Projects
+                        </button>
+                    </form>
+                </div>
+            </div> -->
+            <!-- <button (click)="loadProjects()">Load Projects List</button> -->
+            <!-- <table class="table table-bordered" align="center" style="column-width: 35%">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">DESCRIPTION</th>
+                        <th scope="col">SUPERVISOR</th>
+                        <th scope="col">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr scope="row" *ngFor="let project of stuProjects">
+                        <td>{{ project._id }}</td>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.description }}</td>
+                        <td>{{ project.supervisor }}</td>
+                        <td>{{ project.status ? "Approved" : "Pending" }}</td>
+                    </tr>
+                </tbody>
+            </table> -->
+        </div>
+    </div>
+    <div class="rightContainer1" style="width: 600px; margin-top: 70px; margin-left: 60px;">
+        <b>
+            <legend style="float: left">Your Projects List</legend>
+        </b>
+        <div style="margin-top: 10px; margin-bottom: 20px">
+            <div class="mb-3">
+                <form #sId="ngForm" (ngSubmit)="loadStudentProjects(sId.value)">
+                    <span>
+                    <input type="text" placeholder="Enter student1 name" style="margin-right: 10px;" name="sId" ngModel /><button type="submit">View Your Projects</button>
+                    </span>
+                </form>
+            </div>
+        </div>
+        <table class="table table-bordered" align="center" style="column-width: 35%">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">DESCRIPTION</th>
+                    <th scope="col">SUPERVISOR</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">Work Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr scope="row" *ngFor="let project of stuProjects">
+                    <td>{{ project._id }}</td>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.description }}</td>
+                    <td>{{ project.supervisor }}</td>
+                    <td>{{ project.status ? "Approved" : "Pending" }}</td>
+                    <td *ngIf="project.status">
+                        <div>
+                            <form #compPost="ngForm">
+                                <div class="mb-3">
+                                    <label for="txtName" class="form-label">Enter the percentage Completed</label>
+                                    <input type="text" name="percent" class="form-control" ngModel />
+                                    <button type="submit" class="btn btn-primary"
+                                        (click)="updateCompletion(project,compPost.value)">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+   
+</body>

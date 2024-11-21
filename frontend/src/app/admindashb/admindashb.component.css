@@ -1,0 +1,17 @@
+body{
+  background-image:none; /* Removes the background image */
+}
+table{
+    border: 1px solid black;
+    text-align: center;
+    column-width:35% 
+}
+th{
+    border: 1px solid black;
+}
+tr{
+    border: 1px solid black;
+}
+legend{
+    text-align: center;
+}

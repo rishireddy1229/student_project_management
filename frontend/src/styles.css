@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    background-image: url('image2.jpg');
+    /* background-size: cover; */
+    /* Additional background properties if needed */
+}
+/* nav{
+  background-size: cover;
+} */
+navbar bg-primary{
+  width:100%;
+}

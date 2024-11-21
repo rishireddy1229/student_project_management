@@ -1,0 +1,17 @@
+body{
+    /* background-image: none; */
+    color:white;
+}
+div{
+    color: white;
+}
+table{
+    color: white;
+    border: 1px solid white;
+    text-align: center;
+}
+td{
+    color:white;
+    font-size: large;
+    font-style: bold;
+}

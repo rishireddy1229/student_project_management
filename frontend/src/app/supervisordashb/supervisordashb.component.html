@@ -1,0 +1,139 @@
+<!-- <p>supervisordashb works!</p> -->
+
+
+
+<!-- <button type="button" (click)="displayAddPro()">Add projects</button> -->
+<body>
+<div class="whole container" style="width:fit-content; display: grid;margin:0% ;padding: 0%;">
+    <br>
+    
+    <div class="leftContainer" style=" display: grid;grid-template-columns: 1fr 1fr;  margin-top: 50px; margin-left: 10px; align-items: center;">
+        <div class="addProContainer" style="width: 500px; margin: 10px; border: 0.5cm;">
+            <b>
+                <legend>Create Project</legend>
+            </b>
+
+            <form #projectsPost="ngForm" (ngSubmit)="addProjects(projectsPost.value)">
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">Project Id</label>
+                    <input type="text" name="_id" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtPrice" class="form-label">Title</label>
+                    <input type="text" name="name" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtQuantity" class="form-label">Description</label>
+                    <input type="text" name="description" class="form-control" ngModel />
+                </div>
+                <div class="mb-3">
+                    <label for="txtQuantity" class="form-label">Supervisor</label>
+                    <input type="text" name="supervisor" class="form-control" ngModel />
+                </div>
+                <button type="submit" class="btn btn-primary">{{editMode? 'Edit Project': 'Add Project'}}</button>
+            </form>
+        </div>
+        <div class="rightContainer" style=" margin-top: 10px;margin-left:50px ;width:fit-content;align-items: center;" >
+                <b style="font-size: x-large;margin-right: 10px;">Projects List</b>
+            <button type="button" (click)="loadProjects()">View Projects</button>
+            <!-- <button (click)="loadProjects()">Load Projects List</button> -->
+            <br><br>
+            <table class="table table-bordered" align="center" style="column-width:35% ">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">DESCRIPTION</th>
+                        <th scope="col">SUPERVISOR</th>
+                        <th scope="col">SELECTED</th>
+                        <!-- <th>STATUS</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr scope="row" *ngFor="let project of projects">
+                        <td>{{project._id}}</td>
+                        <td>{{project.name}}</td>
+                        <td>{{project.description}}</td>
+                        <td>{{project.supervisor}}</td>
+                        <td>{{project.selected}}</td>
+                        <!-- <td>{{project.status}}</td> -->
+                        <!-- <td><button type="button" class="btn btn-primary" (click)="editProjects(project._id)">Edit</button>
+                        </td>
+                        <td><button type="button" class="btn btn-primary"
+                                (click)="deleteProjects(project._id)">Delete</button></td> -->
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+    </div>
+    <div>
+        <div class="rightContainer" style=" margin-top: 100px;margin: 10px;">
+            <b>
+                <legend style="float: left">Your Approved Projects List</legend>
+            </b>
+            <div style="margin-top: 10px; margin-bottom: 20px">
+                <div class="mb-3">
+                    <form #sId="ngForm">
+                        <input type="text" name="sId" placeholder="enter supervisor name" class="form-control" ngModel />
+                        <br>
+                        <button type="submit" class="btn btn-primary" (click)="loadSupervisorProjects(sId.value)">
+                            View Your Projects
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- <button (click)="loadProjects()">Load Projects List</button> -->
+            <table class="table table-bordered" align="center" style="column-width: 15px">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">DESCRIPTION</th>
+                        <th scope="col">SUPERVISOR</th>
+                        <th scope="col">STUDENTS</th>
+                        <th scope="col">S_PHONE_NO</th>
+                        <th scope="col">S_EMAIL</th>
+                        <th scope="col">STATUS</th>
+                        <th scope="col">Monitor</th>
+                        <th scope="col">%</th>
+                        <th scope="col">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr scope="row" *ngFor="let project of suProjects">
+                        <td>{{ project._id }}</td>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.description }}</td>
+                        <td>{{ project.supervisor }}</td>
+                        <td>{{ project.s1Id }}
+                            <hr>{{ project.s2Id }}
+                            <hr>{{ project.s3Id }}</td>
+                        <td>{{ project.phone }}</td>
+                        <td>{{ project.email }}</td>
+                        <td>{{ project.status ? "Approved" : "Pending" }}</td>
+                        <td *ngIf="project.status">
+                            <button type="submit" class="btn btn-primary" (click)="monitorCompletion(project)">Monitor
+                                Progress</button>
+                        </td>
+                        <td style="width: 200px">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar"
+                                    aria-valuenow="completionPercent[project._id].percent" aria-valuemin="0"
+                                    aria-valuemax="100" style="width: 'completionPercent[project._id].percent'">
+                                    {{completionPercent[project._id].percent}}
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ completionPercent[project._id].percent==100 ? "Project completed. Please evaluate" :
+                            " Yet to be completed " }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>

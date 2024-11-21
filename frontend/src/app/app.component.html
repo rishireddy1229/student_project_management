@@ -1,0 +1,24 @@
+<nav class="navbar bg-primary" data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+     <b style="margin-right: 450px;"><a class="navbar-brand" href="#">STUDENT PROJECT MANAGEMENT SYSTEM</a></b> 
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+         <!-- <b><a class="nav-link active" aria-current="page" href="">HOME</a></b>  -->
+          <b><a class="nav-link" routerLink="logina">ADMIN</a></b>
+          <b><a class="nav-link" routerLink="loginsu">SUPERVISOR</a></b>
+          <b><a class="nav-link" routerLink="loginst">STUDENT</a></b>
+          <b><a class="nav-link" routerLink="/" type="button" (click)="logout()">LOGOUT</a></b>
+          <!-- <a class="nav-link disabled"></a> -->
+        </div>
+      </div>
+    </div>
+  </nav>
+</nav>
+
+
+<router-outlet></router-outlet>

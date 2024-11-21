@@ -1,0 +1,259 @@
+<br>
+
+<body>
+    <div style="display:flex; justify-content:space-around; align-items:center;margin-top:5px;margin-bottom: 5px;">
+        <button type="button" class="btn btn-primary" (click)="displayPro()">MANAGE PROJECTS</button>
+        <button type="button" class="btn btn-primary" (click)="displaySu()">MANAGE SUPERVISORS</button>
+        <button type="button" class="btn btn-primary" (click)="displayStu()">MANAGE STUDENTS</button>
+    </div>
+    <!-- <button type="button" (click)="displayAddPro()">Add projects</button> -->
+    <div class="projectsWholeContainer" style="width:100%; display: flex; " *ngIf="viewPro">
+        <br>
+        <div class="leftContainer"
+            style=" display: flex;  margin-top: 100px; margin-right: 100px; align-items: center;">
+            <div class="addProContainer" style="width: 500px; margin: 10px; border: 0.5cm;">
+                <b>
+                    <legend style="text-align: center;">CREATE PROJECT</legend>
+                </b>
+
+                <form #projectsPost="ngForm" (ngSubmit)="addProjects(projectsPost.value)">
+                    <div class="mb-3">
+                        <label for="txtName" class="form-label">Project Id</label>
+                        <input type="text" name="_id" class="form-control" ngModel />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtPrice" class="form-label">Title</label>
+                        <input type="text" name="name" class="form-control" ngModel />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtQuantity" class="form-label">Description</label>
+                        <input type="text" name="description" class="form-control" ngModel />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtQuantity" class="form-label">Supervisor</label>
+                        <input type="text" name="supervisor" class="form-control" ngModel />
+                    </div>
+                    <button type="submit" class="btn btn-primary">{{editMode? 'Edit Project': 'Add Project'}}</button>
+                </form>
+            </div>
+
+        </div>
+        <div>
+            <div class="rightContainer" style=" width:40% ;margin-top: 100px; ">
+                <b>Unselected Projects List </b><input type="button" value="View Projects" (click)="loadProjects()">
+
+
+                <!-- <button (click)="loadProjects()">Load Projects List</button> -->
+                <br><br>
+                <table class="table table-bordered" align="center" style="column-width:35% ">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">DESCRIPTION</th>
+                            <th scope="col">SUPERVISOR</th>
+                            <th scope="col">SELECTED</th>
+                            <th scope="col">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr scope="row" *ngFor="let project of unSelProjects">
+                            <td>{{project._id}}</td>
+                            <td>{{project.name}}</td>
+                            <td>{{project.description}}</td>
+                            <td>{{project.supervisor}}</td>
+                            <td>{{project.selected}}</td>
+                            <td>{{project.status}}</td>
+                            <td><button type="button" class="btn btn-primary"
+                                    (click)="editProjects(project._id)">Edit</button>
+                                <hr>
+                                <button type="button" class="btn btn-primary"
+                                    (click)="deleteProjects(project._id)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+
+            <div class="rightContainer" style=" width:40% ;margin-top: 100px">
+                <b> Projects for approval </b><input type="button" value="View Projects" (click)="loadProjectsForApp()">
+                <!-- <button (click)="loadProjects()">Load Projects List</button> -->
+                <br><br>
+                <table class="table table-bordered" align="center" style="column-width:35% ">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">DESCRIPTION</th>
+                            <th scope="col">SUPERVISOR</th>
+                            <th scope="col">APPROVAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr scope="row" *ngFor="let project of unAppProjects">
+                            <td>{{project._id}}</td>
+                            <td>{{project.name}}</td>
+                            <td>{{project.description}}</td>
+                            <td>{{project.supervisor}}</td>
+                            <td><button type="button" class="btn btn-primary"
+                                    (click)="approveProjects(project)">Approve</button></td>
+                            <!-- <td><button type="button" class="btn btn-primary" (click)="editProjects(project._id)">Edit</button>
+                    </td>
+                    <td><button type="button" class="btn btn-primary"
+                            (click)="deleteProjects(project._id)">Delete</button></td> -->
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="supervisorsWholeContainer" style="width:100px; display: flex;  " *ngIf="viewSu">
+        <br><br><br>
+        <div class="leftContainer"
+            style=" display: flex;  margin-top: 100px; margin-right: 100px; align-items: center;">
+            <div class="addProContainer" style="width: 500px; margin: 10px; border: 0.5cm;">
+                <b>
+                    <legend>Add Supervisor</legend>
+                </b>
+
+                <form #supervisorsPost="ngForm" (ngSubmit)="addSupervisors(supervisorsPost.value)">
+                    <div class="mb-3">
+                        <label for="txtName" class="form-label">Supervisor Id</label>
+                        <input type="text" name="_id" class="form-control" ngModel />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtPrice" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" ngModel />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtQuantity" class="form-label">Phone Number</label>
+                        <input type="text" name="phone" class="form-control" ngModel />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtQuantity" class="form-label">Email</label>
+                        <input type="text" name="email" class="form-control" ngModel />
+                    </div>
+                    <button type="submit" class="btn btn-primary">{{editMode1? 'Edit Supervisor': 'Add
+                        Supervisor'}}</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="rightContainer" style=" width:800px ;margin-top: 100px; ">
+            <b>Supervisors List </b><button type="button" (click)="loadSupervisors()">View Supervisors</button>
+            <!-- <button (click)="loadProjects()">Load Projects List</button> -->
+            <br><br>
+            <table class="table table-bordered" align="center" style="column-width:35% ">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">PHONE</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">UPDATIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr scope="row" *ngFor="let s of supervisors ">
+                        <td>{{s._id}}</td>
+                        <td>{{s.name}}</td>
+                        <td>{{s.phone}}</td>
+                        <td>{{s.email}}</td>
+                        <!-- <td>{{p.name}}</td> -->
+                        <td>
+                            <button type="button" class="btn btn-primary" (click)="editSupervisors(s._id)">Edit</button>
+                            <hr>
+                            <button type="button" class="btn btn-primary"
+                                (click)="deleteSupervisors(s._id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+
+
+
+
+    </div>
+    <div class="studentsWholeContainer" style="width:100%; display: flex;  " *ngIf="viewStu">
+        <br><br><br>
+        <div class="leftContainer"
+            style=" display: flex;  margin-top: 100px; margin-right: 100px; align-items: center;">
+            <div class="addProContainer" style="width: 500px; margin: 10px; border: 0.5cm;">
+                <b>
+                    <legend>Add Student</legend>
+                </b>
+
+                <form #studentsPost="ngForm" (ngSubmit)="addStudents(studentsPost.value)">
+                    <div class="mb-3">
+                        <label for="txtName" class="form-label">Student Id</label>
+                        <input type="text" name="_id" class="form-control" ngModel />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtPrice" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" ngModel />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtQuantity" class="form-label">Phone Number</label>
+                        <input type="text" name="phone" class="form-control" ngModel />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtQuantity" class="form-label">Email</label>
+                        <input type="text" name="email" class="form-control" ngModel />
+                    </div>
+                    <button type="submit" class="btn btn-primary">{{editMode2? 'Edit Student': 'Add Student'}}</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="rightContainer" style=" width:800px ;margin-top: 100px; ">
+            <b>Students List </b><button type="button" (click)="loadStudents()">View Students</button>
+            <br><br>
+            <!-- <button (click)="loadProjects()">Load Projects List</button> -->
+            <table class="table table-bordered" align="center" style="column-width:35% ">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">PHONE</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">UPDATIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr scope="row" *ngFor="let s of students ">
+                        <td>{{s._id}}</td>
+                        <td>{{s.name}}</td>
+                        <td>{{s.phone}}</td>
+                        <td>{{s.email}}</td>
+                        <!-- <td>{{p.name}}</td> -->
+                        <td><button type="button" class="btn btn-primary" (click)="editStudents(s._id)">Edit</button>
+                            <hr>
+                            <button type="button" class="btn btn-primary"
+                                (click)="deleteStudents(s._id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+
+
+
+    </div>
+</body>
